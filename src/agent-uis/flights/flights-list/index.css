@@ -1,0 +1,72 @@
+/* Estilos específicos para o componente FlightsList */
+.flights-list-container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.flight-card {
+  min-height: 280px;
+}
+
+.flight-segment {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease-in-out;
+}
+
+.flight-segment:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.flight-route-line {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.flight-route-line::before {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #94a3b8 0%, #3b82f6 50%, #94a3b8 100%);
+  margin: 0 8px;
+}
+
+.flight-price {
+  color: #1e40af;
+  font-weight: 700;
+}
+
+.flight-duration {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.flight-stops {
+  font-size: 0.875rem;
+  padding: 2px 8px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #475569;
+}
+
+.baggage-included {
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.baggage-not-included {
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .flight-card {
+    min-height: 250px;
+  }
+
+  .flight-segment {
+    padding: 8px;
+  }
+}

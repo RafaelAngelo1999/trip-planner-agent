@@ -1,0 +1,74 @@
+/* Estilos específicos para o componente HotelsList */
+.hotels-list-container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.hotel-card {
+  min-height: 450px;
+  transition: all 0.3s ease;
+}
+
+.hotel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.hotel-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.hotel-image img {
+  transition: transform 0.3s ease;
+}
+
+.hotel-card:hover .hotel-image img {
+  transform: scale(1.05);
+}
+
+.star-rating {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.star-filled {
+  color: #fbbf24;
+  fill: #fbbf24;
+}
+
+.star-empty {
+  color: #d1d5db;
+}
+
+.hotel-price-highlight {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #93c5fd;
+}
+
+.hotel-policy-badge {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.nightly-rate {
+  color: #374151;
+}
+
+.total-rate {
+  color: #1e40af;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .hotel-card {
+    min-height: 400px;
+  }
+
+  .hotel-image {
+    height: 180px;
+  }
+}
