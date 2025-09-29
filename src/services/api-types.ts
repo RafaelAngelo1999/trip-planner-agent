@@ -154,15 +154,15 @@ export function convertApiFlightToItinerary(
   apiFlight: ApiFlight,
 ): import("../agent/types").FlightItinerary {
   return {
-    itineraryId: apiFlight.id,
-    airline: apiFlight.airline,
+    itineraryId: apiFlight?.id,
+    airline: apiFlight?.airline,
     outbound: [
       {
-        carrier: apiFlight.airline.substring(0, 2).toUpperCase(),
-        flightNumber: apiFlight.flight_number,
-        from: apiFlight.origin,
-        to: apiFlight.destination,
-        depTime: new Date(apiFlight.departure_time).toLocaleTimeString(
+        carrier: apiFlight?.airline.substring(0, 2).toUpperCase(),
+        flightNumber: apiFlight?.flight_number,
+        from: apiFlight?.origin,
+        to: apiFlight?.destination,
+        depTime: new Date(apiFlight?.departure_time).toLocaleTimeString(
           "pt-BR",
           {
             hour: "2-digit",

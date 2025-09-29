@@ -1,9 +1,9 @@
 /**
  * API Client para Trip Planner Backend
- * Base URL: https://trip-planner-backend-three.vercel.app
+ * Base URL configurada via variável de ambiente
  */
 
-const API_BASE_URL = "https://trip-planner-backend-three.vercel.app";
+const API_BASE_URL = process.env.VITE_API_BASE_URL || "http://localhost:3001";
 
 export interface ApiError {
   code: string;

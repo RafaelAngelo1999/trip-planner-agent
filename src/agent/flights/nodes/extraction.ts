@@ -62,14 +62,16 @@ function calculateDates(
 export async function extractFlightSearch(
   state: FlightsState,
 ): Promise<FlightsUpdate> {
-  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 }).bindTools([
-    {
-      name: "extract_flight_search",
-      description:
-        "Extracts flight search parameters from user conversation with intelligent defaults and validation.",
-      schema: flightSearchExtractionSchema,
-    },
-  ]);
+  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 })
+    .bindTools([
+      {
+        name: "extract_flight_search",
+        description:
+          "Extracts flight search parameters from user conversation with intelligent defaults and validation.",
+        schema: flightSearchExtractionSchema,
+      },
+    ])
+    .withConfig({ tags: ["langsmith:nostream"] });
 
   const prompt = `You are an expert AI assistant specialized in flight booking and parameter extraction with deep understanding of travel industry standards.
 
@@ -202,14 +204,16 @@ ${formatMessages(state.messages)}`;
 export async function extractFlightBooking(
   state: FlightsState,
 ): Promise<FlightsUpdate> {
-  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 }).bindTools([
-    {
-      name: "extract_flight_booking",
-      description:
-        "Extracts flight booking parameters from the user's conversation.",
-      schema: flightBookingExtractionSchema,
-    },
-  ]);
+  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 })
+    .bindTools([
+      {
+        name: "extract_flight_booking",
+        description:
+          "Extracts flight booking parameters from the user's conversation.",
+        schema: flightBookingExtractionSchema,
+      },
+    ])
+    .withConfig({ tags: ["langsmith:nostream"] });
 
   const prompt = `You are an AI assistant specialized in flight booking. The user wants to book a specific flight.
 Extract the following required information from the user's conversation:
@@ -292,14 +296,16 @@ Example: "To complete your flight booking, I need your full name and email addre
 export async function extractFlightCancellation(
   state: FlightsState,
 ): Promise<FlightsUpdate> {
-  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 }).bindTools([
-    {
-      name: "extract_flight_cancellation",
-      description:
-        "Extracts flight cancellation parameters from the user's conversation.",
-      schema: flightCancellationExtractionSchema,
-    },
-  ]);
+  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 })
+    .bindTools([
+      {
+        name: "extract_flight_cancellation",
+        description:
+          "Extracts flight cancellation parameters from the user's conversation.",
+        schema: flightCancellationExtractionSchema,
+      },
+    ])
+    .withConfig({ tags: ["langsmith:nostream"] });
 
   const prompt = `You are an AI assistant specialized in flight cancellations. The user wants to cancel a flight booking.
 Extract the following required information from the user's conversation:

@@ -68,13 +68,15 @@ export async function extraction(
       ),
   });
 
-  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 }).bindTools([
-    {
-      name: "extract",
-      description: "A tool to extract information from a user's request.",
-      schema: schema,
-    },
-  ]);
+  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 })
+    .bindTools([
+      {
+        name: "extract",
+        description: "A tool to extract information from a user's request.",
+        schema: schema,
+      },
+    ])
+    .withConfig({ tags: ["langsmith:nostream"] });
 
   const prompt = `You're an AI assistant for planning trips. The user has requested information about a trip they want to go on.
 Before you can help them, you need to extract the following information from their request:

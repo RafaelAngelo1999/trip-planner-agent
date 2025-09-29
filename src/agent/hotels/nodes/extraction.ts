@@ -57,13 +57,15 @@ function calculateDates(
 export async function extractHotelSearch(
   state: HotelsState,
 ): Promise<HotelsUpdate> {
-  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 }).bindTools([
-    {
-      name: "extract_hotel_search",
-      description: "Extract hotel search parameters from user conversation.",
-      schema: hotelSearchExtractionSchema,
-    },
-  ]);
+  const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 })
+    .bindTools([
+      {
+        name: "extract_hotel_search",
+        description: "Extract hotel search parameters from user conversation.",
+        schema: hotelSearchExtractionSchema,
+      },
+    ])
+    .withConfig({ tags: ["langsmith:nostream"] });
 
   const prompt = `You are an AI assistant for hotel booking. The user wants to search for hotels.
 Extract the following information from the user's request:
