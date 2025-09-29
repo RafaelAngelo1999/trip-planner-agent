@@ -177,8 +177,9 @@ NEXT_PUBLIC_LANGGRAPH_API_URL=http://localhost:8123
 **📄 [AI-Assisted Development](./docs/ai-assisted-development.md)**
 
 - **Documentação**: Gerada com IA, revisada manualmente
-- **Arquitetura/Design**: Decisões críticas manuais
-- **Componentes UI**: Boilerplate IA + refinamento manual
+- **Testes**: 100% gerados com IA
+- **Código**: Autocomplete GPT-4.1 + desenvolvimento manual
+- **Arquitetura**: Decisões críticas 100% manuais
 
 ## 🧪 Testes e Qualidade
 
@@ -253,13 +254,7 @@ npm test
 | **LangGraph & Generative UI**     | 10%      | ✅         | Multi-agent + component streaming + tools       |
 | **Resiliência & Testes**          | 5%       | ✅         | API simulation + unit/E2E + error handling      |
 
-### ❌ Red Flags Evitados
 
-- ✅ **UI generativa real** (não apenas texto)
-- ✅ **Tools com validação** (Zod schemas runtime)
-- ✅ **Sem XSS** (sanitização adequada)
-- ✅ **README funcional** (instruções que funcionam)
-- ✅ **Persistência real** (SQLite + Prisma com seeds)
 
 ## 🔄 Próximos Passos (MVP → Produção)
 

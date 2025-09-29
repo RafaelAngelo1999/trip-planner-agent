@@ -2,23 +2,19 @@
 
 ## 📊 Uso da IA no Projeto
 
-### 📝 **Documentação (IA + Revisão Manual)**
+### ✅ 100% Gerado com IA
+- **Testes unitários**: Vitest + testing-library
+- **Documentação técnica**: README + docs/ (revisada manualmente)
 
-- **Geração inicial**: GitHub Copilot para estrutura e conteúdo base
-- **Refinamento crítico**: Revisão manual para precisão técnica
-- **Contexto específico**: Ajustes manuais para o desafio Blis AI
+### 🔧 Assistido com IA (Autocomplete GPT-4.1)
+- **Componentes UI**: Estrutura base + refinamento manual
+- **API endpoints**: Boilerplate + validações
 
-### 🏗️ **Desenvolvimento Core (Principalmente Manual)**
-
-```typescript
-// Decisões 100% manuais baseadas em experiência
-const manualDecisions = [
-  "Clean Architecture + DDD", // Experiência enterprise
-  "LangGraph multi-agent design", // Compreensão de agent systems
-  "Multi-repo separation", // Conhecimento microservices
-  "Technology stack selection", // Avaliação manual de trade-offs
-];
-```
+### 🏗️ 100% Decisões Manuais
+- **Arquitetura geral**: Multi-repo + Clean Architecture
+- **Stack técnico**: LangGraph + Next.js + Prisma
+- **Design patterns**: Repository, Use Cases, Domain
+- **Fluxo UX**: Chat interface + Generative UI
 
 #### 🤖 **5% AI-Assisted**:
 
