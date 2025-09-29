@@ -1,8 +1,18 @@
-# 🛠️ Tools Specification
+# 🛠️ Tools Implementadas
 
-## Visão Geral
+## 🎯 Status de Implementação
 
-O sistema implementa **6 tools principais** com validação Zod runtime, simulação de latência realística e error handling robusto. Todas as tools seguem o padrão de entrada/saída tipada e retornam dados structured + UI components.
+**✅ Implementadas no MVP:**
+
+- `listFlights` - Busca de voos
+- `bookFlight` - Reserva de voos
+- `cancelFlight` - Cancelamento de voos
+- `listHotels` - Busca de hotéis
+
+**🔄 Planejadas (não implementadas):**
+
+- `bookHotel` - Reserva de hotéis
+- `cancelHotel` - Cancelamento de hotéis
 
 ## ✈️ Flight Tools
 
@@ -11,37 +21,43 @@ O sistema implementa **6 tools principais** com validação Zod runtime, simula�
 **Descrição**: Busca voos disponíveis entre aeroportos com filtros avançados.
 
 **Schema de Input**:
+
 ```typescript
 const FlightSearchSchema = z.object({
   origin: z.string().min(3).max(4), // IATA codes
   destination: z.string().min(3).max(4),
   departureDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  returnDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  returnDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
   passengers: z.number().int().min(1).max(9).default(1),
-  class: z.enum(['economy', 'business', 'first']).default('economy')
+  class: z.enum(["economy", "business", "first"]).default("economy"),
 });
 ```
 
 **Exemplo de Chamada**:
+
 ```javascript
 await listFlights({
   origin: "CNF",
-  destination: "SFO", 
+  destination: "SFO",
   departureDate: "2025-10-01",
   returnDate: "2025-10-10",
   passengers: 2,
-  class: "economy"
+  class: "economy",
 });
 ```
 
 **Output Structure**:
+
 ```typescript
 interface FlightSearchResult {
   flights: Flight[];
   searchId: string;
   totalResults: number;
   ui: {
-    component: 'FlightsList';
+    component: "FlightsList";
     props: {
       flights: Flight[];
       onBook: (flightId: string) => void;
@@ -60,7 +76,7 @@ interface Flight {
     terminal?: string;
   };
   arrival: {
-    airport: string; 
+    airport: string;
     time: string;
     terminal?: string;
   };
@@ -69,7 +85,7 @@ interface Flight {
   aircraft: string;
   price: {
     amount: number;
-    currency: 'BRL' | 'USD';
+    currency: "BRL" | "USD";
   };
   availability: {
     economy: number;
@@ -80,6 +96,7 @@ interface Flight {
 ```
 
 **Comportamento**:
+
 - ⏱️ **Latência**: 400-800ms simulada
 - 📊 **Success Rate**: ~85% (15% erro simulado)
 - 🔄 **Retry**: Automático com backoff exponencial
@@ -88,6 +105,7 @@ interface Flight {
 ### `bookFlight`
 
 **Schema de Input**:
+
 ```typescript
 const FlightBookingSchema = z.object({
   flightId: z.string().uuid(),
@@ -97,22 +115,23 @@ const FlightBookingSchema = z.object({
     email: z.string().email(),
     phone: z.string().optional(),
     dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-    passport: z.string().optional()
+    passport: z.string().optional(),
   }),
   paymentMethod: z.object({
-    type: z.enum(['credit_card', 'debit_card', 'pix']),
+    type: z.enum(["credit_card", "debit_card", "pix"]),
     cardNumber: z.string().regex(/^\d{16}$/),
     expiryDate: z.string().regex(/^\d{2}\/\d{2}$/),
-    cvv: z.string().regex(/^\d{3,4}$/)
-  })
+    cvv: z.string().regex(/^\d{3,4}$/),
+  }),
 });
 ```
 
 **Output Structure**:
+
 ```typescript
 interface BookingResult {
   pnr: string; // Localizador da reserva
-  status: 'CONFIRMED' | 'PENDING' | 'FAILED';
+  status: "CONFIRMED" | "PENDING" | "FAILED";
   booking: {
     id: string;
     flight: Flight;
@@ -122,7 +141,7 @@ interface BookingResult {
     eTicket: string; // URL do bilhete
   };
   ui: {
-    component: 'BookingConfirmation';
+    component: "BookingConfirmation";
     props: {
       pnr: string;
       booking: BookingDetails;
@@ -135,15 +154,13 @@ interface BookingResult {
 ### `cancelFlight`
 
 **Schema de Input**:
+
 ```typescript
 const FlightCancelSchema = z.object({
   pnr: z.string().min(6).max(6),
-  reason: z.enum([
-    'PASSENGER_REQUEST', 
-    'SCHEDULE_CHANGE', 
-    'WEATHER', 
-    'OTHER'
-  ]).optional()
+  reason: z
+    .enum(["PASSENGER_REQUEST", "SCHEDULE_CHANGE", "WEATHER", "OTHER"])
+    .optional(),
 });
 ```
 
@@ -154,6 +171,7 @@ const FlightCancelSchema = z.object({
 ### `listHotels`
 
 **Schema de Input**:
+
 ```typescript
 const HotelSearchSchema = z.object({
   location: z.string().min(2), // Cidade ou coordenadas
@@ -161,20 +179,33 @@ const HotelSearchSchema = z.object({
   checkOut: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   guests: z.object({
     adults: z.number().int().min(1).max(8),
-    children: z.number().int().min(0).max(4).default(0)
+    children: z.number().int().min(0).max(4).default(0),
   }),
-  priceRange: z.object({
-    min: z.number().min(0).optional(),
-    max: z.number().min(0).optional()
-  }).optional(),
-  amenities: z.array(z.enum([
-    'WiFi', 'Pool', 'Gym', 'Spa', 'Restaurant', 
-    'Parking', 'PetFriendly', 'BusinessCenter'
-  ])).optional()
+  priceRange: z
+    .object({
+      min: z.number().min(0).optional(),
+      max: z.number().min(0).optional(),
+    })
+    .optional(),
+  amenities: z
+    .array(
+      z.enum([
+        "WiFi",
+        "Pool",
+        "Gym",
+        "Spa",
+        "Restaurant",
+        "Parking",
+        "PetFriendly",
+        "BusinessCenter",
+      ]),
+    )
+    .optional(),
 });
 ```
 
 **Output Structure**:
+
 ```typescript
 interface Hotel {
   id: string;
@@ -207,45 +238,48 @@ Seguem estrutura similar aos flight tools com schemas específicos para dados ho
 ## 🎯 Tool Execution Pipeline
 
 ### 1. **Input Validation**
+
 ```typescript
 const executeTool = async (toolName: string, input: unknown) => {
   // Zod validation
   const schema = getToolSchema(toolName);
   const validatedInput = schema.parse(input);
-  
+
   // Business rules validation
   await validateBusinessRules(toolName, validatedInput);
-  
+
   return await callToolImplementation(toolName, validatedInput);
 };
 ```
 
 ### 2. **API Simulation Layer**
+
 ```typescript
 const simulateAPICall = async <T>(
   operation: () => Promise<T>,
-  config: SimulationConfig
+  config: SimulationConfig,
 ): Promise<T> => {
   // Simulate network latency
   await delay(config.latency.min, config.latency.max);
-  
+
   // Simulate random failures
   if (Math.random() < config.errorRate) {
-    throw new APISimulationError('Simulated network failure');
+    throw new APISimulationError("Simulated network failure");
   }
-  
+
   return await operation();
 };
 
 // Configuration per tool
 const TOOL_CONFIGS = {
-  listFlights: { latency: { min: 400, max: 800 }, errorRate: 0.10 },
+  listFlights: { latency: { min: 400, max: 800 }, errorRate: 0.1 },
   bookFlight: { latency: { min: 800, max: 1500 }, errorRate: 0.15 },
-  listHotels: { latency: { min: 300, max: 600 }, errorRate: 0.08 }
+  listHotels: { latency: { min: 300, max: 600 }, errorRate: 0.08 },
 };
 ```
 
 ### 3. **Response Formatting**
+
 ```typescript
 const formatToolResponse = (toolName: string, data: any, error?: Error) => {
   return {
@@ -254,52 +288,55 @@ const formatToolResponse = (toolName: string, data: any, error?: Error) => {
     data: error ? null : data,
     error: error?.message,
     ui: generateUIComponent(toolName, data, error),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 };
 ```
 
-## 🔧 Error Handling Strategies
+## 🔧
 
 ### Error Types
+
 ```typescript
 enum ToolErrorType {
-  VALIDATION_ERROR = 'VALIDATION_ERROR',     // Zod schema violation
-  BUSINESS_RULE_ERROR = 'BUSINESS_RULE_ERROR', // Domain rules
-  NETWORK_ERROR = 'NETWORK_ERROR',           // Simulated API failures
-  TIMEOUT_ERROR = 'TIMEOUT_ERROR',           // Request timeout
-  RATE_LIMIT_ERROR = 'RATE_LIMIT_ERROR'      // Too many requests
+  VALIDATION_ERROR = "VALIDATION_ERROR", // Zod schema violation
+  BUSINESS_RULE_ERROR = "BUSINESS_RULE_ERROR", // Domain rules
+  NETWORK_ERROR = "NETWORK_ERROR", // Simulated API failures
+  TIMEOUT_ERROR = "TIMEOUT_ERROR", // Request timeout
+  RATE_LIMIT_ERROR = "RATE_LIMIT_ERROR", // Too many requests
 }
 ```
 
 ### Retry Logic
+
 ```typescript
 const executeWithRetry = async (tool: Tool, input: any, maxRetries = 3) => {
   let lastError: Error;
-  
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       return await tool.execute(input);
     } catch (error) {
       lastError = error;
-      
+
       // Don't retry validation errors
-      if (error.type === 'VALIDATION_ERROR') {
+      if (error.type === "VALIDATION_ERROR") {
         throw error;
       }
-      
+
       // Exponential backoff
       if (attempt < maxRetries) {
         await delay(Math.pow(2, attempt) * 1000);
       }
     }
   }
-  
+
   throw new MaxRetriesExceededError(lastError);
 };
 ```
 
 ### User Feedback
+
 - 🔄 **Loading States**: Skeleton UI durante execução
 - ⚠️ **Error Toast**: Notificação amigável para falhas
 - 🎯 **Retry Button**: Permite re-executar tool manual
@@ -308,15 +345,16 @@ const executeWithRetry = async (tool: Tool, input: any, maxRetries = 3) => {
 ## 🎨 UI Component Generation
 
 ### Dynamic Component Props
+
 ```typescript
 const generateFlightUI = (
-  flights: Flight[], 
+  flights: Flight[],
   searchParams: FlightSearchParams,
-  onBook: BookingCallback
+  onBook: BookingCallback,
 ) => {
   return {
-    type: 'react',
-    component: 'FlightsList',
+    type: "react",
+    component: "FlightsList",
     props: {
       flights,
       searchParams,
@@ -325,34 +363,35 @@ const generateFlightUI = (
       error: null,
       // Event handlers
       onSort: (field: string) => handleSort(field),
-      onFilter: (filters: FlightFilters) => handleFilter(filters)
+      onFilter: (filters: FlightFilters) => handleFilter(filters),
     },
     // CSS classes for styling
-    className: 'flights-container',
+    className: "flights-container",
     // Accessibility props
-    ariaLabel: `${flights.length} flights found from ${searchParams.origin} to ${searchParams.destination}`
+    ariaLabel: `${flights.length} flights found from ${searchParams.origin} to ${searchParams.destination}`,
   };
 };
 ```
 
 ### Real-time Updates
+
 ```typescript
 // Streaming updates for long-running searches
 const streamFlightResults = async function* (searchParams: FlightSearchParams) {
-  yield { type: 'loading', message: 'Searching flights...' };
-  
+  yield { type: "loading", message: "Searching flights..." };
+
   const partialResults = await getPartialFlights(searchParams);
-  yield { 
-    type: 'partial', 
+  yield {
+    type: "partial",
     data: partialResults,
-    ui: generateFlightUI(partialResults, searchParams, handleBooking)
+    ui: generateFlightUI(partialResults, searchParams, handleBooking),
   };
-  
+
   const fullResults = await getFullFlights(searchParams);
-  yield { 
-    type: 'complete',
+  yield {
+    type: "complete",
     data: fullResults,
-    ui: generateFlightUI(fullResults, searchParams, handleBooking)
+    ui: generateFlightUI(fullResults, searchParams, handleBooking),
   };
 };
 ```
@@ -360,6 +399,7 @@ const streamFlightResults = async function* (searchParams: FlightSearchParams) {
 ## 📊 Performance Metrics
 
 ### Performance Notes
+
 - **Latência**: Simulada via resilience.ts (300-1200ms)
 - **Success Rate**: ~85% com 15% erro simulado
 - **Resource Usage**: Otimizado para desenvolvimento local
