@@ -10,7 +10,7 @@ import {
   flightCancellationExtractionSchema,
 } from "../../schemas/flights";
 
-const DO_NOT_RENDER_ID_PREFIX = "internal:";
+import { DO_NOT_RENDER_ID_PREFIX } from "../../../constants";
 
 function calculateDates(
   departDate: string | undefined,
@@ -188,16 +188,9 @@ ${formatMessages(state.messages)}`;
     cheapestOnly: extractedDetails.cheapestOnly || false,
   };
 
-  const extractToolResponse: ToolMessage = {
-    type: "tool",
-    id: `${DO_NOT_RENDER_ID_PREFIX}${uuidv4()}`,
-    tool_call_id: toolCall.id ?? "",
-    content: "Flight search parameters successfully extracted and validated",
-  };
-
+  // Return only the extracted parameters, no messages to avoid UI pollution
   return {
     flightSearchParams: flightSearchDetailsWithDefaults,
-    messages: [response, extractToolResponse],
   };
 }
 
@@ -280,16 +273,9 @@ Example: "To complete your flight booking, I need your full name and email addre
     typeof flightBookingExtractionSchema
   >;
 
-  const extractToolResponse: ToolMessage = {
-    type: "tool",
-    id: `${DO_NOT_RENDER_ID_PREFIX}${uuidv4()}`,
-    tool_call_id: toolCall.id ?? "",
-    content: "Flight booking parameters successfully extracted and validated",
-  };
-
+  // Return only the extracted parameters, no messages to avoid UI pollution
   return {
     flightBookingParams: extractedDetails,
-    messages: [response, extractToolResponse],
   };
 }
 

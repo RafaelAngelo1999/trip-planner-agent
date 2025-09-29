@@ -169,11 +169,11 @@ export function convertApiFlightToItinerary(
             minute: "2-digit",
           },
         ),
-        arrTime: new Date(apiFlight.arrival_time).toLocaleTimeString("pt-BR", {
+        arrTime: new Date(apiFlight?.arrival_time).toLocaleTimeString("pt-BR", {
           hour: "2-digit",
           minute: "2-digit",
         }),
-        durationMin: parseDurationToMinutes(apiFlight.duration),
+        durationMin: parseDurationToMinutes(apiFlight?.duration),
       },
     ],
     inbound: [], // Assumindo voos só de ida por enquanto
@@ -263,6 +263,8 @@ export function convertBookingParamsToApiRequest(
  * Converte duração de string para minutos
  */
 function parseDurationToMinutes(duration: string): number {
+  if (!duration) return 120;
+
   const match = duration.match(/(\d+)h\s*(\d+)?m?/);
   if (!match) return 0;
 

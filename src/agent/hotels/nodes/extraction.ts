@@ -5,7 +5,7 @@ import { formatMessages } from "../../utils/format-messages";
 import { HotelsState, HotelsUpdate } from "../types";
 import { hotelSearchExtractionSchema } from "../../schemas/hotels";
 
-const DO_NOT_RENDER_ID_PREFIX = "internal:";
+import { DO_NOT_RENDER_ID_PREFIX } from "../../../constants";
 
 function calculateDates(
   checkin: string | undefined,

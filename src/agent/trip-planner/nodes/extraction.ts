@@ -4,7 +4,7 @@ import { TripDetails, TripPlannerState, TripPlannerUpdate } from "../types";
 import { z } from "zod";
 import { ToolMessage } from "@langchain/langgraph-sdk";
 import { formatMessages } from "@/agent/utils/format-messages";
-import { DO_NOT_RENDER_ID_PREFIX } from "@/constants";
+import { DO_NOT_RENDER_ID_PREFIX } from "../../../constants";
 
 function calculateDates(
   startDate: string | undefined,
