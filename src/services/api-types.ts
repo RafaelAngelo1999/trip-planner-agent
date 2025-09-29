@@ -14,6 +14,7 @@ export interface ApiFlight {
   departure_time: string; // snake_case e ISO 8601
   arrival_time: string; // snake_case e ISO 8601
   price: number;
+  total: number;
   currency: string;
   duration: string;
   available_seats: number; // snake_case na API real
@@ -153,6 +154,7 @@ export interface ApiFlightSearchParams {
 export function convertApiFlightToItinerary(
   apiFlight: ApiFlight,
 ): import("../agent/types").FlightItinerary {
+  console.log(apiFlight);
   return {
     itineraryId: apiFlight?.id,
     airline: apiFlight?.airline,
@@ -177,9 +179,9 @@ export function convertApiFlightToItinerary(
       },
     ],
     inbound: [], // Assumindo voos só de ida por enquanto
-    stops: apiFlight.stops,
-    baggageIncluded: apiFlight.baggage_included,
-    totalPrice: apiFlight.price,
+    stops: apiFlight?.stops || 1,
+    baggageIncluded: apiFlight?.baggage_included,
+    totalPrice: apiFlight.total,
     currency: apiFlight.currency,
   };
 }
