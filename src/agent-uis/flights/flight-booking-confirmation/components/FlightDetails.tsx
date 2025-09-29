@@ -60,7 +60,7 @@ export function FlightDetails({ flightDetails }: FlightDetailsProps) {
           <div className="text-right">
             <div className="text-sm font-bold text-blue-600">
               R${" "}
-              {totalPrice.toLocaleString("pt-BR", {
+              {totalPrice?.toLocaleString("pt-BR", {
                 minimumFractionDigits: 2,
               })}
             </div>

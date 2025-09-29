@@ -23,7 +23,7 @@ export const ptBR: TranslationKeys = {
       totalValue: "Valor Total",
       pnrNote: "Guarde o código PNR para futuras consultas e cancelamentos",
       bookingRequestMessage:
-        "Quero reservar o voo {{itineraryId}} da {{airline}} por R$ {{price}}. Dados do passageiro: Nome: {{name}}, Email: {{email}}",
+        "Quero reservar o voo {{itineraryId}} da {{airline}}. Dados do passageiro: Nome: {{name}}, Email: {{email}}",
     },
     list: {
       outbound: "Ida",

@@ -133,7 +133,7 @@ export function BookingModal({
               <div className="text-center">
                 <div className="text-2xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-1">
                   R${" "}
-                  {selectedFlight.totalPrice.toLocaleString("pt-BR", {
+                  {selectedFlight.totalPrice?.toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
                   })}
                 </div>

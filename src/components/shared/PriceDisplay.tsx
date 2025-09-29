@@ -14,7 +14,7 @@ export function PriceDisplay({
   label,
   className = "",
 }: PriceDisplayProps) {
-  const formattedPrice = price.toLocaleString("pt-BR", {
+  const formattedPrice = price?.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
   });
 

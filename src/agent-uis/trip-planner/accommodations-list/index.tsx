@@ -132,7 +132,7 @@ function SelectedAccommodation({
             </div>
             <div className="flex justify-between font-semibold text-black">
               <span>Total Price</span>
-              <span>${totalPrice.toLocaleString()}</span>
+              <span>${totalPrice?.toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -219,7 +219,7 @@ function BookedAccommodation({
             <span>Total Price:</span>
           </div>
           <div className="flex justify-between font-semibold">
-            <span>${totalPrice.toLocaleString()}</span>
+            <span>${totalPrice?.toLocaleString()}</span>
           </div>
         </div>
       </div>

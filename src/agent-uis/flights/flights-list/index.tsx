@@ -60,7 +60,7 @@ export default function FlightsList(props: FlightsListProps) {
 
     // Get the booking message template and replace variables
     const messageTemplate = t("flight.booking.bookingRequestMessage");
-    const formattedPrice = selectedFlight.totalPrice.toLocaleString(
+    const formattedPrice = selectedFlight.totalPrice?.toLocaleString(
       contextLanguage === "pt-BR" ? "pt-BR" : "en-US",
       { minimumFractionDigits: 2 },
     );

@@ -23,7 +23,7 @@ export const enUS: TranslationKeys = {
       totalValue: "Total Value",
       pnrNote: "Keep the PNR code for future queries and cancellations",
       bookingRequestMessage:
-        "I want to book flight {{itineraryId}} from {{airline}} for ${{price}}. Passenger details: Name: {{name}}, Email: {{email}}",
+        "I want to book flight {{itineraryId}} from {{airline}}. Passenger details: Name: {{name}}, Email: {{email}}",
     },
     list: {
       outbound: "Outbound",
