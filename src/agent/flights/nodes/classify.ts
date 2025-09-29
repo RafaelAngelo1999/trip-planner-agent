@@ -5,11 +5,11 @@ import { formatMessages } from "../../utils/format-messages";
 export async function classifyFlightIntent(
   state: FlightsState,
 ): Promise<FlightsUpdate> {
-  const llm = new ChatOpenAI({ 
-    model: "gpt-4o", 
+  const llm = new ChatOpenAI({
+    model: "gpt-4o",
     temperature: 0,
-  }).withConfig({ 
-    tags: ["langsmith:nostream"] // Prevent streaming to avoid UI leakage
+  }).withConfig({
+    tags: ["langsmith:nostream"], // Prevent streaming to avoid UI leakage
   });
 
   const prompt = `You are a specialized AI assistant for flight intent classification with expertise in natural language understanding and travel domain knowledge.
