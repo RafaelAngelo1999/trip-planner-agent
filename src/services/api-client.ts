@@ -3,7 +3,7 @@
  * Base URL: https://trip-planner-backend-three.vercel.app
  */
 
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "https://trip-planner-backend-three.vercel.app";
 
 export interface ApiError {
   code: string;
