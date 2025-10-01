@@ -5,6 +5,7 @@
 ## 🏗️ Arquitetura do Sistema
 
 ### Microserviços Implementados
+[🎥 Ver vídeo de exemplo](./docs/exemplo.mp4)
 
 ```mermaid
 graph TB
